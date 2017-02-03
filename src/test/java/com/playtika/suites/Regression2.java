@@ -20,6 +20,3 @@ public class Regression2 {
         Conditions.setStatus(false);
     }
 }
-
-
-
