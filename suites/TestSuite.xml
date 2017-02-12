@@ -1,0 +1,12 @@
+<suite name="Full Test">
+    <test name="Regression" junit="true">
+        <classes>
+            <class name="com.playtika.tests.Test1">
+                <methods>
+                    <include name="testMethod1"/>
+                </methods>
+            </class>
+            <class name="com.playtika.tests.Test2"/>
+        </classes>
+    </test>
+</suite>
