@@ -1,0 +1,23 @@
+<suite name="Suite1">
+    <test name="Regression1">
+        <classes>
+            <class name="com.playtika.tests.Test1">
+                <methods>
+                    <include name="testMethod1" />
+                    <include name="testMethod2" />
+                </methods>
+            </class>
+            <class name="com.playtika.tests.Test2" />
+        </classes>
+    </test>
+    <test name="Regression2">
+        <classes>
+            <class name="com.playtika.tests.Test4">
+                <methods>
+                    <include name="testMethod8" />
+                </methods>
+            </class>
+            <class name="com.playtika.tests.Test5" />
+        </classes>
+    </test>
+</suite>
