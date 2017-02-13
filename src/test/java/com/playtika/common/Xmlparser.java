@@ -10,7 +10,9 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
+import org.junit.runners.Parameterized;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -18,21 +20,24 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static org.junit.runners.Parameterized.*;
+
 
 /**
  * Created by KDAMAC on 12.02.17.
  */
 public class Xmlparser {
 
+    private String xmlFile = System.getProperty("suite");
+
     @Test
-    public void testsGenerator() throws DocumentException, ClassNotFoundException {
-        File xml = new File("/Users/dmitrijhorev/Documents/Repo2/playtika/src/test/java/com/playtika/suites/Regression1.xml");
+    public void Xmlparser() throws DocumentException, ClassNotFoundException {
+        File xml = new File("/Users/dmitrijhorev/Documents/Repo2/playtika/src/test/java/com/playtika/suites/"+xmlFile);
         SAXReader reader = new SAXReader();
         Document doc = reader.read(xml);
         Element suite = doc.getRootElement();
         String suiteName = suite.attributeValue("name");
         ArrayList<String> arrTests = parse(suite, suiteName);
-        System.out.println(arrTests);
 
         for (int t = 0; t < arrTests.size(); t++) {
             ArrayList<String> arrClasses = parse(suite, arrTests.get(t));
@@ -42,21 +47,10 @@ public class Xmlparser {
 
                 Class testClass = Class.forName("com.playtika.tests." + arrClasses.get(c));
                 if(methodsClasses.size() == 0) {
-                    Method[] methods = testClass.getDeclaredMethods();
-
-                    for (Method method : methods) {
-                        Annotation[] anns = method.getAnnotations();
-                        
-                        for (Annotation ann : anns){
-                            if (ann.annotationType().getName().equals("org.junit.Test")){
-                                testsRunner(testClass, method.getName());
-                            }
-                        }
-
-                    }
+                    testsRunner(testClass);
                 } else {
-                    for (int m = 0; m < methodsClasses.size(); m++) {
-                        testsRunner(testClass, methodsClasses.get(m));
+                    for (String methodClass : methodsClasses) {
+                        testsRunner(testClass, methodClass);
                     }
 
                 }
@@ -68,6 +62,15 @@ public class Xmlparser {
         JUnitCore junit = new JUnitCore();
         Request req = Request.method(cl, method);
         Result result = junit.run(req);
+        for (Failure failure : result.getFailures()) {
+            System.out.println(failure.toString());
+        }
+        Assert.assertTrue(result.wasSuccessful());
+    }
+
+    private void testsRunner(Class cl){
+        JUnitCore junit = new JUnitCore();
+        Result result = junit.run(cl);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }
