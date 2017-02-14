@@ -50,7 +50,4 @@ public class Runner {
         }
         Assert.assertTrue(result.wasSuccessful());
     }
-
 }
-
-

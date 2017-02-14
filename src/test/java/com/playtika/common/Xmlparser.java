@@ -18,9 +18,7 @@ public class Xmlparser {
 
     private String xmlFile = System.getProperty("suite");
 
-    //private String xmlFile = "Regression2.xml";
     private ArrayList<ArrayList> classesAndMethodsMap = new ArrayList<ArrayList>();
-
 
     public ArrayList<ArrayList> parser() throws DocumentException, ClassNotFoundException {
         File xml = new File("/Users/dmitrijhorev/Documents/Repo2/playtika/src/test/java/com/playtika/suites/"+xmlFile);
@@ -91,5 +89,3 @@ public class Xmlparser {
         return null;
     }
 }
-
-
