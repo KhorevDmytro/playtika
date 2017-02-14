@@ -13,6 +13,7 @@ import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runners.Parameterized;
+import org.junit.runners.model.TestClass;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -28,7 +29,10 @@ import static org.junit.runners.Parameterized.*;
  */
 public class Xmlparser {
 
-    private String xmlFile = System.getProperty("suite");
+    //private String xmlFile = System.getProperty("suite");
+
+    private String xmlFile = "Regression2.xml";
+    JUnitCore junit = new JUnitCore();
 
     @Test
     public void Xmlparser() throws DocumentException, ClassNotFoundException {
@@ -59,7 +63,6 @@ public class Xmlparser {
     }
 
     private void testsRunner(Class cl, String method) throws ClassNotFoundException {
-        JUnitCore junit = new JUnitCore();
         Request req = Request.method(cl, method);
         Result result = junit.run(req);
         for (Failure failure : result.getFailures()) {
@@ -69,7 +72,6 @@ public class Xmlparser {
     }
 
     private void testsRunner(Class cl){
-        JUnitCore junit = new JUnitCore();
         Result result = junit.run(cl);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
@@ -106,6 +108,10 @@ public class Xmlparser {
 
         return null;
     }
+//    @Test
+//    public void test(){
+//        System.out.println("sassas");
+//    }
 }
 
 
