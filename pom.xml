@@ -11,7 +11,7 @@
     <properties>
         <junit-version>4.12</junit-version>
         <surefire-version>2.19.1</surefire-version>
-        <suite-runner>com.playtika.suites.Regression.java</suite-runner>
+        <suite-runner>com.playtika.suites.Runner.java</suite-runner>
     </properties>
 
     <dependencies>

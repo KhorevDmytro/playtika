@@ -1,27 +1,14 @@
 package com.playtika.common;
 
-import com.playtika.tests.Test1;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Request;
-import org.junit.runner.Result;
-import org.junit.runner.RunWith;
-import org.junit.runner.notification.Failure;
-import org.junit.runners.Parameterized;
-import org.junit.runners.model.TestClass;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import static org.junit.runners.Parameterized.*;
+import java.util.*;
 
 
 /**
@@ -29,13 +16,13 @@ import static org.junit.runners.Parameterized.*;
  */
 public class Xmlparser {
 
-    //private String xmlFile = System.getProperty("suite");
+    private String xmlFile = System.getProperty("suite");
 
-    private String xmlFile = "Regression2.xml";
-    JUnitCore junit = new JUnitCore();
+    //private String xmlFile = "Regression2.xml";
+    private ArrayList<ArrayList> classesAndMethodsMap = new ArrayList<ArrayList>();
 
-    @Test
-    public void Xmlparser() throws DocumentException, ClassNotFoundException {
+
+    public ArrayList<ArrayList> parser() throws DocumentException, ClassNotFoundException {
         File xml = new File("/Users/dmitrijhorev/Documents/Repo2/playtika/src/test/java/com/playtika/suites/"+xmlFile);
         SAXReader reader = new SAXReader();
         Document doc = reader.read(xml);
@@ -51,34 +38,29 @@ public class Xmlparser {
 
                 Class testClass = Class.forName("com.playtika.tests." + arrClasses.get(c));
                 if(methodsClasses.size() == 0) {
-                    testsRunner(testClass);
+                    for (Method met : testClass.getDeclaredMethods()){
+                        for (Annotation ann : met.getDeclaredAnnotations()){
+                            if (ann.annotationType().getName().equals("org.junit.Test")){
+                                ArrayList<String> arr1 = new ArrayList<String>();
+                                arr1.add(testClass.getName());
+                                arr1.add(met.getName());
+                                classesAndMethodsMap.add(arr1);
+                            }
+                        }
+                    }
                 } else {
                     for (String methodClass : methodsClasses) {
-                        testsRunner(testClass, methodClass);
+                        ArrayList<String> arr2 = new ArrayList<String>();
+                        arr2.add(testClass.getName());
+                        arr2.add(methodClass);
+                        classesAndMethodsMap.add(arr2);
                     }
 
                 }
             }
         }
+        return classesAndMethodsMap;
     }
-
-    private void testsRunner(Class cl, String method) throws ClassNotFoundException {
-        Request req = Request.method(cl, method);
-        Result result = junit.run(req);
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure.toString());
-        }
-        Assert.assertTrue(result.wasSuccessful());
-    }
-
-    private void testsRunner(Class cl){
-        Result result = junit.run(cl);
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure.toString());
-        }
-        Assert.assertTrue(result.wasSuccessful());
-    }
-
 
     private ArrayList<String> parse(Element block, String nameParent) {
         ArrayList<String> arrNames = new ArrayList<String>();
@@ -108,10 +90,6 @@ public class Xmlparser {
 
         return null;
     }
-//    @Test
-//    public void test(){
-//        System.out.println("sassas");
-//    }
 }
 
 
