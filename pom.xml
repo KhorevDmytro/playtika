@@ -9,26 +9,21 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <surefire-version>2.19.1</surefire-version>
-        <suiteFile>suites/TestSuite.xml</suiteFile>
         <junit-version>4.12</junit-version>
+        <surefire-version>2.19.1</surefire-version>
+        <suite-runner>com.playtika.suites.Runner.java</suite-runner>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.10</version>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
         </dependency>
     </dependencies>
 
@@ -39,9 +34,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-version}</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <includes>
+                        <include>${suite-runner}</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

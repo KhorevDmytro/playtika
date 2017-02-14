@@ -1,0 +1,12 @@
+<suite name="Suite1">
+    <test name="Regression1">
+        <classes>
+            <class name="Test1">
+                <methods>
+                    <include name="testMethod1" />
+                </methods>
+            </class>
+            <class name="Test2" />
+        </classes>
+    </test>
+</suite>

@@ -1,8 +1,8 @@
 package com.playtika.tests;
 
 import com.playtika.pages.Page1;
-import org.junit.*;
-
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Created by KDAMAC on 02.02.17.
