@@ -8,7 +8,7 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
 
 
 /**
@@ -16,12 +16,13 @@ import java.util.*;
  */
 public class Xmlparser {
 
+    //private String xmlFile = "Regression1.xml";
     private String xmlFile = System.getProperty("suite");
-
     private ArrayList<ArrayList> classesAndMethodsMap = new ArrayList<ArrayList>();
 
     public ArrayList<ArrayList> parser() throws DocumentException, ClassNotFoundException {
-        File xml = new File("/Users/dmitrijhorev/Documents/Repo2/playtika/src/test/java/com/playtika/suites/"+xmlFile);
+        File f = new File("");
+        File xml = new File(f.getAbsolutePath().toString()+"/src/test/java/com/playtika/suites/"+xmlFile);
         SAXReader reader = new SAXReader();
         Document doc = reader.read(xml);
         Element suite = doc.getRootElement();
