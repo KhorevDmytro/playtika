@@ -22,7 +22,7 @@ public class Xmlparser {
 
     public ArrayList<ArrayList> parser() throws DocumentException, ClassNotFoundException {
         File f = new File("");
-        File xml = new File(f.getAbsolutePath().toString()+"/src/test/java/com/playtika/suites/"+xmlFile);
+        File xml = new File(f.getAbsolutePath().toString()+"/src/findChar/java/com/playtika/suites/"+xmlFile);
         SAXReader reader = new SAXReader();
         Document doc = reader.read(xml);
         Element suite = doc.getRootElement();
@@ -39,7 +39,7 @@ public class Xmlparser {
                 if(methodsClasses.size() == 0) {
                     for (Method met : testClass.getDeclaredMethods()){
                         for (Annotation ann : met.getDeclaredAnnotations()){
-                            if (ann.annotationType().getName().equals("org.junit.Test")){
+                            if (ann.annotationType().getName().equals("org.junit.StringParser")){
                                 ArrayList<String> arr1 = new ArrayList<String>();
                                 arr1.add(testClass.getName());
                                 arr1.add(met.getName());
